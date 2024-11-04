@@ -16,7 +16,7 @@ class Seeder
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 titel TEXT NOT NULL,
                 author TEXT NOT NULL,
-                pages INTERGER,
+                pages INTERGER NOT NULL,
                 status TEXT NOT NULL)')
   end
 
