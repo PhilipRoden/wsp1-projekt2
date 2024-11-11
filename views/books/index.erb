@@ -1,0 +1,22 @@
+<h2>pågende böcker</h2>
+
+<ul>
+<% @books.each do |book| %>
+<li>
+<p "/books/<%= book['id']%>">
+    <%= book['titel'] %></p>
+<ul>
+
+<li>
+    <%= book['author'] %></p>
+</li>
+<li>
+    <%= book['pages'] %></p>
+</li>
+<li>
+    <%= book['status'] %></p>
+</li>
+</ul>
+</li>
+<% end %>
+</ul>
