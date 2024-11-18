@@ -18,6 +18,7 @@ class App < Sinatra::Base
     get '/books/new' do 
         erb(:"books/new")
     end
+
     post '/books' do
         p params
         titel=params["book_titel"]
@@ -25,6 +26,18 @@ class App < Sinatra::Base
         pages=params["book_pages"]
         status=params["book_status"]
         db.execute("INSERT INTO books (titel, author, pages, status) VALUES(?,?,?,?)", [titel, author, pages, status])
+        redirect "/books"
+    end
+
+    get '/books/user' do 
+        erb(:"books/user")
+    end
+    
+    post '/users' do
+        p params
+        password_hashed = BCrypt::Password.create(params["password"])
+        user=params["user"]
+        db.execute("INSERT INTO users (user, password) VALUES(?,?)", [user, password_hashed])
         redirect "/books"
     end
 end

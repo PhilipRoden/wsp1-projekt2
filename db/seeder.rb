@@ -9,19 +9,31 @@ class Seeder
 
   def self.drop_tables
     db.execute('DROP TABLE IF EXISTS books')
+    db.execute('DROP TABLE IF EXISTS users')
+
   end
 
   def self.create_tables
     db.execute('CREATE TABLE books (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                titel TEXT NOT NULL,
-                author TEXT NOT NULL,
-                pages INTERGER NOT NULL                                                                                                   ,
-                status TEXT NOT NULL)')
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      titel TEXT NOT NULL,
+      author TEXT NOT NULL,
+      pages INTERGER NOT NULL                                                                                                   ,
+      status TEXT NOT NULL)')
+
+    puts "create table users"
+    
+    db.execute('CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user TEXT NOT NULL,
+      password TEXT NOT NULL
+    )')
+
   end
 
   def self.populate_tables
     db.execute('INSERT INTO books (titel, author, pages, status) VALUES ("Lord of the rings",   "J.R.R Tolken", 500, "reading")')
+    db.execute('INSERT INTO users (user, password) VALUES ("philip", "123")')
   end
 
   private
