@@ -18,8 +18,8 @@ class Seeder
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       titel TEXT NOT NULL,
       author TEXT NOT NULL,
-      pages INTERGER NOT NULL                                                                                                   ,
-      status TEXT NOT NULL)')
+      pages INTEGER NOT NULL                                                                                                   ,
+      status INTEGER NOT NULL)')
 
     puts "create table users"
     
@@ -32,7 +32,8 @@ class Seeder
   end
 
   def self.populate_tables
-    db.execute('INSERT INTO books (titel, author, pages, status) VALUES ("Lord of the rings",   "J.R.R Tolken", 500, "reading")')
+    db.execute('INSERT INTO books (titel, author, pages, status) VALUES ("Lord of the rings",   "J.R.R Tolken", 500, 1)')
+    db.execute('INSERT INTO books (titel, author, pages, status) VALUES ("Two towers",   "J.R.R Tolken", 700, 0)')
     db.execute('INSERT INTO users (user, password) VALUES ("philip", "123")')
   end
 

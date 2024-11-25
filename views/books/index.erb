@@ -1,22 +1,53 @@
 <h2>pågende böcker</h2>
 
+
 <ul>
 <% @books.each do |book| %>
-<li>
-<p "/books/<%= book['id']%>">
-    <%= book['titel'] %></p>
-<ul>
-
-<li>
-    <%= book['author'] %></p>
+<%if book['status']==0 %>
+    <li>
+    <p "/books/<%= book['id']%>">
+        <%= book['titel'] %></p>
+        <ul>
+            <li>
+                <%= book['author'] %></p>
+            </li>
+            <li>
+                <%= book['pages'] %></p>
+            </li>
+            <li>
+                <%= book['status'] %></p>
+            </li>
+            <form action='/books/<%= book['id'] %>/status_update' method='post'> 
+                <button type="submit">STATUS</button>
+            </form> 
+        </ul>
+        <%end%>
 </li>
-<li>
-    <%= book['pages'] %></p>
-</li>
-<li>
-    <%= book['status'] %></p>
-</li>
+    <% end %>
 </ul>
+
+<h2>färdiga böcker</h2>
+<ul>
+<% @books.each do |book| %>
+<%if book['status']==1 %>
+    <li>
+    <p "/books/<%= book['id']%>">
+        <%= book['titel'] %></p>
+        <ul>
+            <li>
+                <%= book['author'] %></p>
+            </li>
+            <li>
+                <%= book['pages'] %></p>
+            </li>
+            <li>
+                <%= book['status'] %></p>
+            </li>
+            <form action='/books/<%= book['id'] %>/status_update' method='post'> 
+                <button type="submit">STATUS</button>
+            </form> 
+        </ul>
+        <%end%>
 </li>
-<% end %>
+    <% end %>
 </ul>

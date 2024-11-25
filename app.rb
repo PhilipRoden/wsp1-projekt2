@@ -40,4 +40,12 @@ class App < Sinatra::Base
         db.execute("INSERT INTO users (user, password) VALUES(?,?)", [user, password_hashed])
         redirect "/books"
     end
+
+    post '/books/:id/status_update' do |id| 
+        current_status = db.execute('SELECT status FROM books WHERE id = ?', [id]).first['status']
+        new_status = current_status == 0 ? 1 : 0
+        db.execute('UPDATE books SET status = ? WHERE id = ?', [new_status, id])
+            redirect "/books"
+    end
 end
+
