@@ -29,11 +29,11 @@ class App < Sinatra::Base
         redirect "/books"
     end
 
-    get '/books/user' do 
+    get '/books/new_user' do 
         erb(:"books/user")
     end
     
-    post '/users' do
+    post '/new_users' do
         p params
         password_hashed = BCrypt::Password.create(params["password"])
         user=params["user"]
@@ -47,5 +47,25 @@ class App < Sinatra::Base
         db.execute('UPDATE books SET status = ? WHERE id = ?', [new_status, id])
             redirect "/books"
     end
+
+    post '/books/:id/delete' do |id| 
+        db.execute('DELETE FROM books WHERE id = ?', id)
+            redirect "/books"
+    end
+
+    get '/books/:id/edit' do |id| 
+        @book = db.execute('SELECT * FROM books WHERE id = ?', id.to_i).first
+        erb (:'books/edit')
+    end
+
+    post '/books/:id/update' do |id| 
+        p params
+        titel = params["book_titel"]
+        pages= params["book_pages"]
+        author = params["book_author"]
+        db.execute('UPDATE books SET titel = ?, pages = ?, author = ? WHERE id = ?', [titel, pages, author, id])
+        redirect "/books"
+    end
+
 end
 

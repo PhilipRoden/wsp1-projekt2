@@ -14,11 +14,13 @@
             <li>
                 <%= book['pages'] %></p>
             </li>
-            <li>
-                <%= book['status'] %></p>
-            </li>
             <form action='/books/<%= book['id'] %>/status_update' method='post'> 
                 <button type="submit">STATUS</button>
+            </form><form action='/books/<%= book['id'] %>/delete' method='post'> 
+                <button type="submit">DELETE</button>
+            </form> 
+            <form action='/books/<%= book['id'] %>/edit' method='get'> 
+                <button type="submit">EDIT</button>
             </form> 
         </ul>
         <%end%>
@@ -40,11 +42,14 @@
             <li>
                 <%= book['pages'] %></p>
             </li>
-            <li>
-                <%= book['status'] %></p>
-            </li>
             <form action='/books/<%= book['id'] %>/status_update' method='post'> 
                 <button type="submit">STATUS</button>
+            </form>
+            <form action='/books/<%= book['id'] %>/delete' method='post'> 
+                <button type="submit">DELETE</button>
+            </form> 
+            <form action='/books/<%= book['id'] %>/edit' method='get'> 
+                <button type="submit">EDIT</button>
             </form> 
         </ul>
         <%end%>

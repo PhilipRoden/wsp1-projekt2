@@ -1,0 +1,6 @@
+<form action='/books/<%=@book['id']%>/update' method='post'> 
+  Title <input type='text' name='book_titel' value='<%= @book['titel']%>'></input>
+  Pages <input type='text' name='book_pages' value='<%= @book['pages']%>'></input> 
+  Author <input type='text' name='book_author' value='<%= @book['author']%>'></input>
+  <button type='submit'>Send</button>
+</form>
