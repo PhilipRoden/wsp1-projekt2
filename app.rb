@@ -15,6 +15,7 @@ class App < Sinatra::Base
         @books = db.execute('SELECT * FROM books')
         erb(:"books/index")
     end
+
     get '/books/new' do 
         erb(:"books/new")
     end
@@ -24,16 +25,16 @@ class App < Sinatra::Base
         titel=params["book_titel"]
         author=params["book_author"]
         pages=params["book_pages"]
-        status=params["book_status"]
+        status=["0"]
         db.execute("INSERT INTO books (titel, author, pages, status) VALUES(?,?,?,?)", [titel, author, pages, status])
         redirect "/books"
     end
 
-    get '/books/new_user' do 
-        erb(:"books/user")
+    get '/new_user' do 
+        erb(:"/new_user")
     end
     
-    post '/new_users' do
+    post '/new_user' do
         p params
         password_hashed = BCrypt::Password.create(params["password"])
         user=params["user"]
@@ -65,6 +66,21 @@ class App < Sinatra::Base
         author = params["book_author"]
         db.execute('UPDATE books SET titel = ?, pages = ?, author = ? WHERE id = ?', [titel, pages, author, id])
         redirect "/books"
+    end
+
+    get '/login' do
+        erb :"/login"
+    end
+
+    post '/login' do
+        username = params['user']
+        cleartext_password = params['password'] 
+        #hämta användare och lösenord från databasen med hjälp av det inmatade användarnamnet.
+        current_user = db.execute('SELECT * FROM users WHERE user = ?', username).first
+        #omvandla den lagrade saltade hashade lösenordssträngen till en riktig bcrypt-hash
+        password_from_db = BCrypt::Password.new(current_user['password'])
+        p current_user
+        p cleartext_password
     end
 
 end
