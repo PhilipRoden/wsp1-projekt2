@@ -54,6 +54,11 @@ class App < Sinatra::Base
             redirect "/books"
     end
 
+    post '/books/logout' do 
+        session.destroy
+        redirect "/books"
+    end
+
     get '/books/:id/edit' do |id| 
         @book = db.execute('SELECT * FROM books WHERE id = ?', id.to_i).first
         erb (:'books/edit')
@@ -75,12 +80,30 @@ class App < Sinatra::Base
     post '/login' do
         username = params['user']
         cleartext_password = params['password'] 
-        #hämta användare och lösenord från databasen med hjälp av det inmatade användarnamnet.
         current_user = db.execute('SELECT * FROM users WHERE user = ?', username).first
-        #omvandla den lagrade saltade hashade lösenordssträngen till en riktig bcrypt-hash
+        if current_user.empty?
+            @error_message = "please insert username"
+            return erb(:"/login")
+        end
+        if current_user==nil
+            @error_message = "Wrong Username"
+            return erb(:"/login")
+        end
         password_from_db = BCrypt::Password.new(current_user['password'])
+        if current_user.empty?
+            @error_message = "please insert password"
+            return erb(:"/login")
+        end
+        if password_from_db == cleartext_password 
+            session[:user_id] = current_user['id'] 
+            redirect "/books"  
+        else
+            @error_message = "Wrong password"
+            return erb(:"/login")
+        end
         p current_user
         p cleartext_password
+
     end
 
 end
